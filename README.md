@@ -9,7 +9,7 @@ and Composer is installed globally. Visit [PHP installation](https://www.php.net
 
 #### Initial commit
 
-For the initial we have only ran ove the commands to have a  Symfony skeleton application and declare our dependency of 
+For the initial commit we have only ran the commands to have a  Symfony skeleton application and declare our dependency of 
 Doctrine. For this the purpose of this introduction we are using the [Doctrine ORM Pack](https://packagist.org/packages/symfony/orm-pack). 
 
 ```bash
@@ -23,3 +23,34 @@ composer require --dev symfony/maker-bundle
 
 Additionally we are using the `maker-bundle` from Symfony in order to use Doctrine's helper commands to generate 
 files/code. More on [Symfony packs](https://symfony.com/doc/current/setup.html#symfony-packs).
+
+#### Add entities with primitive properties
+
+In this commit we will first set up our Doctrine settings. For the purposes of this introduction we will use SQLite. All
+we have to do is change the `DATABASE_URL` parameter in our `.env` to `sqlite:///%kernel.project_dir%/var/data.db`.
+
+In order to test that you have a successful database connection run the following command: 
+
+```bash
+bin/console doctrine:database:create
+```
+
+If everything is successful you should read `Created database .../doctrine-intro/var/data.db for connection named default`.
+Where `...` is your local directory location.
+
+Now we can continue to create our entities. We will work with [Publisher](doc/make-publisher.md), [Book](doc/make-book.md), 
+[Author](doc/make-author.md) and [Address](doc/make-address.md). All of them will first 
+have primitive property values. To create them we run the following command for each entity.
+
+```bash
+bin/console make:entity
+```
+
+Last we run the following command to synchronise our physical database schema with our application's schema.
+
+```bash
+bin/console doctrine:schema:create
+```
+
+You should see a warning telling you that this operation should not be executed in a production environment and a success 
+message stating `[OK] Database schema created successfully!`
