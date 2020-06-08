@@ -71,4 +71,12 @@ Address entities. The relationship structure is shown in the table below:
 | Publisher | Address   | OneToOne unidirectional  |
 | Book      | Publisher | ManyToOne unidirectional |
 | Book      | Author    | ManyToMany bidirectional |
-| Author    | Address   | OneToMan bidirectional   |
+| Author    | Address   | OneToMany bidirectional  |
+
+#### Update create, find commands for Publisher, Book, Author for relationships
+
+In this commit we update the create and find commands to include the new relationship definitions. We also change slightly
+doctrine's default generated code.  
+
+* We make Publisher - Address a read only interaction.
+* We change Book relationship fetching mechanism to better suit our needs.
