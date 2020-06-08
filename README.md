@@ -80,3 +80,11 @@ doctrine's default generated code.
 
 * We make Publisher - Address a read only interaction.
 * We change Book relationship fetching mechanism to better suit our needs.
+
+#### Add update command for Publisher
+
+In this commit we add an update command for the Publisher entity. To keep things simple we will not add update commands
+for the remaining entities. With this command we can dissect all SQL instructions that Doctrine is executing in the background
+for us. 
+
+It is good exercise to add the remaining commands yourself if you would like to dive in deeper. 
