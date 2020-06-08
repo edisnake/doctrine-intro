@@ -38,8 +38,8 @@ bin/console doctrine:database:create
 If everything is successful you should read `Created database .../doctrine-intro/var/data.db for connection named default`.
 Where `...` is your local directory location.
 
-Now we can continue to create our entities. We will work with [Publisher](doc/make-publisher.md), [Book](doc/make-book.md), 
-[Author](doc/make-author.md) and [Address](doc/make-address.md). All of them will first 
+Now we can continue to create our entities. We will work with [Publisher](doc/create/make-publisher.md), [Book](doc/create/make-book.md), 
+[Author](doc/create/make-author.md) and [Address](doc/create/make-address.md). All of them will first 
 have primitive property values. To create them we run the following command for each entity.
 
 ```bash
@@ -59,3 +59,16 @@ message stating `[OK] Database schema created successfully!`
 
 In this commit we are creating simple commands to showcase the main usage of persisting (`INSERT`), finding (`SELECT`) 
 and removing (`DELETE`) entities from our storage/database. 
+
+#### Add relationships between entities
+
+In this commit we make use again of the `make:entity` command multiple times to define relationships between our 
+[Publisher](doc/update/make-publisher.md), [Book](doc/update/make-book.md), [Author](doc/update/make-author.md) and 
+Address entities. The relationship structure is shown in the table below: 
+
+| Which?    | Target    | Relationship             |
+|-----------|-----------|--------------------------|
+| Publisher | Address   | OneToOne unidirectional  |
+| Book      | Publisher | ManyToOne unidirectional |
+| Book      | Author    | ManyToMany bidirectional |
+| Author    | Address   | OneToMan bidirectional   |
