@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Entity\Publisher;
+use App\Entity\Book;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,11 +12,10 @@ use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use function in_array;
 
-final class UpdatePublisherCommand extends Command
+final class UpdateBookCommand extends Command
 {
-    protected static $defaultName = 'app:update:publisher';
+    protected static $defaultName = 'app:update:book';
 
     private $doctrine;
 
@@ -33,12 +32,12 @@ final class UpdatePublisherCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $io->title('Update Publisher');
+        $io->title('Update Book');
 
         $exit = false;
 
         do {
-            $answer = $io->ask('Which Publisher would you like to update? (type exit or quit to finish)', '??');
+            $answer = $io->ask('Which Book would you like to update? (type exit or quit to finish)', '??');
 
             if (in_array($answer, ['quit', 'exit'])) {
                 $exit = true;
@@ -46,32 +45,26 @@ final class UpdatePublisherCommand extends Command
             }
 
             if ($answer === '??') {
-                $this->getApplication()->find('app:find:publisher')->execute(new StringInput(''), new ConsoleOutput());
+                $this->getApplication()->find('app:find:book')->execute(new StringInput(''), new ConsoleOutput());
                 continue;
             }
 
-            $publisher = $this->doctrine->getRepository(Publisher::class)->find($answer);
+            $book = $this->doctrine->getRepository(Book::class)->find($answer);
 
-            if (! $publisher instanceof Publisher) {
-                $io->writeln("[$answer] is not a valid Publisher identifier.");
+            if (! $book instanceof Book) {
+                $io->writeln("[$answer] is not a valid Book identifier.");
                 continue;
             }
 
-            $name = $io->ask('Enter new name or leave empty to skip', '');
+            $price = $io->ask('Enter new price or leave empty to skip', '');
 
-            if (!empty($name)) {
-                $publisher->setName($name);
-            }
-
-            $street = $io->ask('Enter new address or leave empty to skip', '');
-
-            if (!empty($street)) {
-                $publisher->getAddress()->setStreet($street);
+            if (!empty($price)) {
+                $book->setPrice($price);
             }
 
             $this->doctrine->getManager()->flush();
 
-            $io->writeln("Publisher with [name][{$publisher->getName()}] was updated successfully.");
+            $io->writeln("Book with [title][{$book->getTitle()}] was updated successfully.");
         } while (!$exit);
 
         return Command::SUCCESS;

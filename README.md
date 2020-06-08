@@ -88,3 +88,11 @@ for the remaining entities. With this command we can dissect all SQL instruction
 for us. 
 
 It is good exercise to add the remaining commands yourself if you would like to dive in deeper. 
+
+#### Introduce Doctrine events (Global and Entity)
+
+In this commit we introduce different types of Doctrine events. Lifecycle callbacks directly on the Publisher entity. We
+set up an Entity Listener for the Book entity so that we can "mail" changes as they happen. Lastly we also add a Doctrine 
+event listener to persist history entries for our Book price changes. 
+
+We make use once more of the `make:entity` command to create our [PriceHistory](doc/create/make-price-history.md) entity.
